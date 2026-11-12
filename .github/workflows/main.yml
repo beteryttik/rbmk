@@ -1,0 +1,43 @@
+name: Build RBMK Mod
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Unpack mod archive
+        run: |
+          unzip -o rbmk-mod.zip -d unpacked
+          # если в архиве всё лежит внутри папки rbmk-mod — ок,
+          # иначе содержимое архива сразу попадёт в unpacked/
+          if [ -d unpacked/rbmk-mod ]; then mv unpacked/rbmk-mod project; else mv unpacked project; fi
+          ls -la project
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build mod
+        run: gradle build --no-daemon
+        working-directory: project
+
+      - name: Upload jar artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rbmk-mod-jar
+          path: project/build/libs/*.jar
