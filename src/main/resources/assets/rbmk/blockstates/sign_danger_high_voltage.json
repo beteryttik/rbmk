@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "rbmk:block/sign_danger_high_voltage"
+    }
+  }
+}

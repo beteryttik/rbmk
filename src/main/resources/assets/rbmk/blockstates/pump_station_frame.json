@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "rbmk:block/pump_station_frame"
+    }
+  }
+}
