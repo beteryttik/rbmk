@@ -3,7 +3,6 @@ package ru.criticalmass.registry;
 import ru.criticalmass.RbmkMod;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -13,7 +12,7 @@ public class ModBlocks {
 
     private static DeferredBlock<Block> reg(String name, float strength, SoundType sound) {
         DeferredBlock<Block> b = BLOCKS.registerBlock(name,
-                () -> new Block(BlockBehaviour.Properties.of().strength(strength).sound(sound)));
+                props -> new Block(props.strength(strength).sound(sound)));
         ITEMS.registerSimpleBlockItem(b);
         return b;
     }
